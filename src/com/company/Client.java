@@ -13,14 +13,22 @@ public class Client
         this.socket = new Socket(serverAddress, serverPort);
         this.scanner = new Scanner(System.in);
     }
-    protected void start() throws IOException {
+    public void start() throws IOException {
         String input;
         while (true) {
-            input = scanner.nextLine();
+
             PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
+            input = scanner.nextLine();
             sendMessage(input, out);
             System.out.println("Recibiendo");
-            System.out.println(reader());
+            String recibido = reader();
+            String keyword = "Login";
+            if (recibido.equals(keyword)){
+                System.out.println("Entiendo datos del server");
+            }
+            System.out.println(recibido);
+
+            System.out.println("borrando buffer");
             buffer = new byte[512];
 
         }
@@ -39,10 +47,16 @@ public class Client
         inputt.read(buffer);
         for(byte b:buffer){
             char c = (char)b;
-            response += c;
+            if(c != '\0'){
+                if (c != '\n'){
+                    response += c;
+                }
+            }
+            else break;
         }
         return response;
     }
+
 
 }
 
