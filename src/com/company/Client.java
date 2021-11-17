@@ -8,40 +8,59 @@ public class Client
     private final Socket socket;
     private DataInputStream inputt;
     private Scanner scanner;
+    private boolean flag = true;
+    private DataOutputStream out;
     private byte[] buffer = new byte[512];
     public Client(String serverAddress, int serverPort) throws Exception {
         this.socket = new Socket(serverAddress, serverPort);
         this.scanner = new Scanner(System.in);
+        out = new DataOutputStream(this.socket.getOutputStream());
+        inputt = new DataInputStream(this.socket.getInputStream());
     }
     public void start() throws IOException {
-        String input;
-        while (true) {
+        while (flag) {
 
-            PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
-            input = scanner.nextLine();
-            sendMessage(input, out);
-            System.out.println("Recibiendo");
+            System.out.println("Recibiendo: ");
             String recibido = reader();
-            String keyword = "Login";
-            if (recibido.equals(keyword)){
-                System.out.println("Entiendo datos del server");
-            }
-            System.out.println(recibido);
-
-            System.out.println("borrando buffer");
+            processMessage(recibido); //metodo para saber que hacer con la info recibida
+            //borrando buffer
             buffer = new byte[512];
 
         }
+        socket.close();
+        inputt.close();
+        out.close();
     }
+    private void processMessage(String message) throws IOException {
+        String keyword = "Login";
+        String keyword2 = "Puntaje";
+        System.out.println(message);
+        if (message.equals(keyword)){
+            System.out.println("Entiendo datos del server");
+            sendMessage("Puntaje");
+        }
+        else if(message.equals(keyword2)){
+            System.out.println("Asignar puntaje");
+            sendMessage("Adios");
+        }
+        else if (message.equals("Adios")){
+            flag = false;
+        }
 
-    private void sendMessage(String input, PrintWriter out) throws IOException {
-        inputt = new DataInputStream(this.socket.getInputStream());
+    }
+    public void sendMessage(String input) throws IOException {
+
         System.out.println("Enviando: ");
         System.out.println(input);
-        out.println(input);
+        out.write(writer(input));
         out.flush();
-    }
 
+    }
+    private byte[] writer(String message){
+        byte [] bytes;
+        bytes = message.getBytes();
+        return bytes;
+    }
     private String reader() throws IOException {
         String response = "";
         inputt.read(buffer);
@@ -54,6 +73,7 @@ public class Client
             }
             else break;
         }
+
         return response;
     }
 
