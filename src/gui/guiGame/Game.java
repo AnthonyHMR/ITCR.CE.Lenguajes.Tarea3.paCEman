@@ -19,6 +19,11 @@ public class Game extends Thread{
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Envia un mensaje al metodo de la clase Cliente que envia informacion al servidor
+	 * @param message
+	 */
 	public void sendMessage(String message){
 		try {
 			client.sendMessage(message);
@@ -26,6 +31,11 @@ public class Game extends Thread{
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Obtiene el mensaje enviado por el servidor desde el metodo de recibir datos de la clase Cliente
+	 * @return
+	 */
 	public String getMessage(){
 		String message = client.getRecibido();
 		return message;

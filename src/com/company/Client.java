@@ -32,9 +32,19 @@ public class Client
         out.close();
     }
 
+    /**
+     * Retorna el ultimo mensaje recibido desde el servidor
+     * @return
+     */
     public String getRecibido(){
         return recibido;
     }
+
+    /**
+     * La funcion lee los mensajes y envía una respuesta al servidor
+     * @param message es el mesaje enviado por el servidor
+     * @throws IOException
+     */
     private void processMessage(String message) throws IOException {
         String keyword = "Login";
         String keyword2 = "Puntaje";
@@ -52,6 +62,12 @@ public class Client
         //}
 
     }
+
+    /**
+     * Envia un mensaje al servidor
+     * @param input mensaje a enviar
+     * @throws IOException
+     */
     public void sendMessage(String input) throws IOException {
 
         System.out.println("Enviando: ");
@@ -60,6 +76,7 @@ public class Client
         out.flush();
 
     }
+
     private byte[] writer(String message){
         byte [] bytes;
         bytes = message.getBytes();
