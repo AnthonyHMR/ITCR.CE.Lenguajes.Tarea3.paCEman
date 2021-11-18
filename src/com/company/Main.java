@@ -1,8 +1,8 @@
 package com.company;
 import gui.guiGame.Game;
 import gui.guiGame.GameFrame;
-import org.json.simple.parser.*;
-import org.json.simple.*;
+//import org.json.simple.parser.*;
+//import org.json.simple.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
