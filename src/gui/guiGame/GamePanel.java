@@ -1,5 +1,7 @@
 package gui.guiGame;
 
+import com.company.Client;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -16,7 +18,8 @@ public class GamePanel extends JPanel implements Runnable{
 	static final int GAME_HEIGHT = 700;
 	static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH,GAME_HEIGHT);
 	static final int BALL_DIAMETER = 40;
-	
+
+	Game game;
 	Thread gameThread;
 	Image image;
 	Graphics graphics;
@@ -53,6 +56,9 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true);
 		this.addKeyListener(new AL());
 		this.setPreferredSize(SCREEN_SIZE);
+
+		game = new Game();
+		game.start();
 		
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -233,6 +239,7 @@ Toolkit.getDefaultToolkit().sync();
 				if(energized == false){
 					life.lifes--;
 					System.out.println("Has muerto");
+					game.sendMessage("Muerte");
 					newBall();
 
 				}

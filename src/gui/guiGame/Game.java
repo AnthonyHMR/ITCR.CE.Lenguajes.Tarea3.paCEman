@@ -1,10 +1,30 @@
 package gui.guiGame;
 
-public class Game {
-	
-	public static void main(String[] args) {
+import com.company.Client;
 
-		GameFrame myFrame = new GameFrame();
+import java.io.IOException;
 
+public class Game extends Thread{
+	Client client;
+	public void run() {
+		try {
+			client = new Client(
+					"127.0.0.1",
+					8888);
+			client.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void sendMessage(String message){
+		try {
+			client.sendMessage(message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public String getMessage(){
+		String message = client.getRecibido();
+		return message;
 	}
 }

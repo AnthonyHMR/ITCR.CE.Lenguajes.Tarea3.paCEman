@@ -17,11 +17,12 @@ public class Client
         out = new DataOutputStream(this.socket.getOutputStream());
         inputt = new DataInputStream(this.socket.getInputStream());
     }
+    public String recibido;
     public void start() throws IOException {
         while (flag) {
 
             System.out.println("Recibiendo: ");
-            String recibido = reader();
+            recibido = reader();
             processMessage(recibido); //metodo para saber que hacer con la info recibida
             //borrando buffer
             buffer = new byte[512];
@@ -30,6 +31,10 @@ public class Client
         socket.close();
         inputt.close();
         out.close();
+    }
+
+    public String getRecibido(){
+        return recibido;
     }
     private void processMessage(String message) throws IOException {
         String keyword = "Login";
@@ -43,9 +48,9 @@ public class Client
             System.out.println("Asignar puntaje");
             sendMessage("Adios");
         }
-        else if (message.equals("Adios")){
-            flag = false;
-        }
+        //else if (message.equals("Adios")){
+        //    flag = false;
+        //}
 
     }
     public void sendMessage(String input) throws IOException {

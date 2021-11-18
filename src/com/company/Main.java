@@ -1,4 +1,6 @@
 package com.company;
+import gui.guiGame.Game;
+import gui.guiGame.GameFrame;
 import org.json.simple.parser.*;
 import org.json.simple.*;
 
@@ -9,10 +11,7 @@ import java.io.IOException;
 public class Main
 {
     public static void main(String[] args) throws Exception {
-        Client client = new Client(
-                "127.0.0.1",
-                8888);
-        client.start();
+        GameFrame myFrame = new GameFrame();
 
         /*
         JSONParser parser = new JSONParser();
