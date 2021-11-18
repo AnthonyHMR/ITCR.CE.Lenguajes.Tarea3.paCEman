@@ -9,7 +9,12 @@ import java.util.*;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.*;
 
-//import gui.GamePanel;
+/**
+ * Se encarga de manejar la interacción entre elementos del juego
+ * @author Ignacio Morales
+ * @author Anthony Montero
+ * @since 1.0
+ */
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -65,12 +70,20 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread.start();
 	}
 
+	/**
+	 * newBall() crea un nuevo personaje en la posición inicial
+	 * 
+	 */
 	public void newBall() {
 		random = new Random();
 		ball = PacMan.getInstance((GAME_WIDTH / 2) - (BALL_DIAMETER / 2), (GAME_HEIGHT / 2) - (BALL_DIAMETER / 2), BALL_DIAMETER, BALL_DIAMETER);
 	}
 
+	/**
+	 * Crea fantasmas en sus posisciones iniciales y los agrega a la lista de fantamsas
+	 */
 	public void newGhosts() {
+
 		blinky = new Ghost(0, 0, BALL_DIAMETER, BALL_DIAMETER, Color.red);
 		inky = new Ghost(GAME_WIDTH - BALL_DIAMETER, 0, BALL_DIAMETER, BALL_DIAMETER, Color.cyan);
 		clyde = new Ghost(0, GAME_HEIGHT - BALL_DIAMETER, BALL_DIAMETER, BALL_DIAMETER, Color.orange);
@@ -82,6 +95,11 @@ public class GamePanel extends JPanel implements Runnable {
 		ghostList.add(pinky);
 	}
 
+	/**
+	 * newDot crea un punto en las coordenadas dadas
+	 * @param x coordenada en x
+	 * @param y coordenada en y
+	 */
 	public void newDot(int x, int y) {
 		for (int i = 0; i < 40; i++) {
 			for (int j = 0; j < 25; j++) {
@@ -91,6 +109,11 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * newEnergizer crea un energizer en las coordenadas dadas
+	 * @param x coordenada en x
+	 * @param y coordenada en y
+	 */
 	public void newEnergizer(int x, int y) {
 		Random random = new Random();
 		for (int i = 0; i < 10; i++) {
@@ -101,6 +124,11 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * newDot crea una fruta en las coordenadas dadas
+	 * @param x coordenada en x
+	 * @param y coordenada en y
+	 */
 	public void newFruit(int x, int y) {
 		Random random = new Random();
 		for (int i = 0; i < 5; i++) {
@@ -111,6 +139,9 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * newWalls crea las paredes del juego y las guarda en un arreglo de paredes
+	 */
 	public void newWalls() {
 		wallArr[0] = new Wall(cons.SQUARE_SIDE, GAME_HEIGHT - (6 * cons.SQUARE_SIDE), cons.SQUARE_SIDE, 5 * cons.SQUARE_SIDE);
 		wallArr[1] = new Wall(GAME_WIDTH - 2 * cons.SQUARE_SIDE, GAME_HEIGHT - (6 * cons.SQUARE_SIDE), cons.SQUARE_SIDE, 5 * cons.SQUARE_SIDE);
@@ -118,6 +149,9 @@ public class GamePanel extends JPanel implements Runnable {
 		wallArr[3] = new Wall(GAME_WIDTH - 6 * cons.SQUARE_SIDE, 2 * cons.SQUARE_SIDE, 4 * cons.SQUARE_SIDE, 4 * cons.SQUARE_SIDE);
 	}
 
+	/**
+	 * pinta el componente por primera vez
+	 */
 	public void paint(Graphics g) {
 		image = createImage(getWidth(), getHeight());
 		graphics = image.getGraphics();
@@ -125,6 +159,10 @@ public class GamePanel extends JPanel implements Runnable {
 		g.drawImage(image, 0, 0, this);
 	}
 
+	/**
+	 * Dibuja los componentes en la ventana
+	 * @param g
+	 */
 	public void draw(Graphics g) {
 
 		for (int i = 0; i < wallArr.length; i++) {
@@ -150,6 +188,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 	}
 
+	/**
+	 * Animacion de personajes
+	 */
 	public void move() {
 		ball.move();
 		for (int i = 0; i < ghostList.size(); i++) {
@@ -158,6 +199,10 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * Revisa si hay colisiones entre los 
+	 * posibles elementos de la ventana
+	 */
 	public void checkCollision() {
 
 		//stop ball at window edges
@@ -292,6 +337,9 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * Activa modo energizado despues de comer un energizer
+	 */
 	public void energize(){
 
 		energized = true;
@@ -303,6 +351,9 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * Detiene modo energizado
+	 */
 	public void deenergize(){
 
 		energized = false;
@@ -314,6 +365,9 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * Bucle de juego
+	 */
 	public void run() {
 		//game loop
 		long lastTime = System.nanoTime();
@@ -338,7 +392,7 @@ public class GamePanel extends JPanel implements Runnable {
 					life.lifes++;
 					count++;
 				}
-
+				
 				if (life.lifes < 0){
 					ghostList.clear();
 					ball.setXDirection(0);
@@ -361,6 +415,9 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 	}
+	/**
+	 * Escucha eventos de teclas para movimiento de jugador
+	 */
 	public class AL extends KeyAdapter{
 		public void keyPressed(KeyEvent e) {
 

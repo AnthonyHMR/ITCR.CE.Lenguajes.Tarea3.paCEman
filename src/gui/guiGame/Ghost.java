@@ -4,6 +4,11 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 
+/**
+ * Se encarga de manejar los fantasmas del juego
+ * @author Ignacio Morales
+ * @since 1.0
+ */
 public class Ghost extends Rectangle{
 
 	Random random = new Random();
@@ -21,6 +26,9 @@ public class Ghost extends Rectangle{
 		_tcolor = color;
 	}
 	
+	/**
+	 * Decide el siguiente movimiento del fantasma
+	 */
 	public void movement() {
 		int _dir = random.nextInt(4);
 
@@ -43,16 +51,34 @@ public class Ghost extends Rectangle{
 
 	}
 
+	/**
+	 * Setea la direccion en X en la que se mueve el fantasma
+	 * @param xDirection
+	 */
 	public void setXDirection(int xDirection) {
 		xVelocity = xDirection;
 	}
+	
+	/**
+	 * Setea la direccion en Y en la que se mueve el fantasma
+	 * @param yDirection
+	 */
 	public void setYDirection(int yDirection) {
 		yVelocity = yDirection;
 	}
+
+	/**
+	 * Cambia coordenadas del fantasma
+	 */
 	public void move() {
 		x += xVelocity;
 		y += yVelocity;
 	}
+
+	/**
+	 * Dibuja el fantasma en pantalla
+	 * @param g
+	 */
 	public void draw(Graphics g) {
 		g.setColor(_color);
 		g.fillOval(x, y, height, width);

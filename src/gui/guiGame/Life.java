@@ -2,6 +2,12 @@ package gui.guiGame;
 
 import java.awt.*;
 
+/**
+ * Esta clase se encarga de manejar las vidas del jugador
+ * @author Ignacio Morales
+ * @since 1.0
+ */
+
 public class Life extends Rectangle{
 
     static int GAME_WIDTH;
@@ -13,6 +19,10 @@ public class Life extends Rectangle{
 		Score.GAME_HEIGHT = GAME_HEIGHT;
 	}
 
+	/**
+	 * Dibuja la cantidad de vidas en pantalla
+	 * @param g
+	 */
     public void draw(Graphics g) {
 		g.setColor(Color.white);
 		g.setFont(new Font("Consolas",Font.PLAIN,32));

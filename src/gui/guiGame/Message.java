@@ -2,6 +2,12 @@ package gui.guiGame;
 
 import java.awt.*;
 
+/**
+ * Esta clase se encarga de manejar el mensaje de Game Over
+ * @author Anthony Montero
+ * @since 1.0
+ */
+
 public class Message extends Rectangle {
     static int GAME_WIDTH;
     static int GAME_HEIGHT;
@@ -10,6 +16,11 @@ public class Message extends Rectangle {
         Score.GAME_WIDTH = GAME_WIDTH;
         Score.GAME_HEIGHT = GAME_HEIGHT;
     }
+    
+    /**
+     * Dibuja mensaje de Game Over en pantalla
+     * @param g
+     */
     public void draw(Graphics g) {
         g.setColor(Color.white);
         g.setFont(new Font("Consolas",Font.PLAIN,90));

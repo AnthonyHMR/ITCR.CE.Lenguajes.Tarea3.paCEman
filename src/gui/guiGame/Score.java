@@ -2,6 +2,11 @@ package gui.guiGame;
 
 import java.awt.*;
 
+/**
+ * Se encarga de manejar el punntaje del juego
+ * @author Ignacio Morales
+ * @since 1.0
+ */
 public class Score extends Rectangle{
 
 	static int GAME_WIDTH;
@@ -13,6 +18,11 @@ public class Score extends Rectangle{
 		Score.GAME_WIDTH = GAME_WIDTH;
 		Score.GAME_HEIGHT = GAME_HEIGHT;
 	}
+
+	/**
+	 * Dibuja el puntaje en pantalla
+	 * @param g
+	 */
 	public void draw(Graphics g) {
 		g.setColor(Color.white);
 		g.setFont(new Font("Consolas",Font.PLAIN,60));

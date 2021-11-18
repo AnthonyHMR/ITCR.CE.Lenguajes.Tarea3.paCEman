@@ -1,9 +1,12 @@
 package gui.guiGame;
 
 import com.company.Client;
-
 import java.io.IOException;
 
+/**
+ * Esta clase se encarga de crear un hilo para llamar el cliente
+ * @author Anthony Montero
+ */
 public class Game extends Thread{
 	Client client;
 	public void run() {
