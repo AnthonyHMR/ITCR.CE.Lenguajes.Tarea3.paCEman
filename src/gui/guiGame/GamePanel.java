@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Ghost clyde;
 	Ghost pinky;
 	Score score;
+	Message message;
 	Life life;
 	Constants cons;
 	Boolean energized = false;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
 		newDot(1, 1);
 		newEnergizer(2, 1);
 		score = new Score(GAME_WIDTH,GAME_HEIGHT);
+		message = new Message(GAME_WIDTH,GAME_HEIGHT);
 		life = new Life(GAME_WIDTH, GAME_HEIGHT);
 		this.setFocusable(true);
 		this.addKeyListener(new AL());
@@ -74,13 +76,22 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 
 	public void newDot(int x, int y) {
-		Dot dot = new Dot(x*(cons.SQUARE_SIDE/2)-5,y*(cons.SQUARE_SIDE/2)-5,10,10);
-		dotList.add(dot);
+		for(int i=0; i<40; i++) {
+			for(int j=0; j<25; j++) {
+				Dot dot = new Dot(i * x * (cons.SQUARE_SIDE / 2) + 7, j*y * (cons.SQUARE_SIDE / 2) + 50, 10, 10);
+				dotList.add(dot);
+			}
+		}
 	}
 
 	public void newEnergizer(int x, int y) {
-		Energizer energizer = new Energizer(x*(cons.SQUARE_SIDE/2)-10,y*(cons.SQUARE_SIDE/2)-10,20,20);
-		energList.add(energizer);
+		Random random = new Random();
+		for(int i=0; i<5; i++) {
+			int indX = random.nextInt(6);
+			int indY = random.nextInt(6);
+			Energizer energizer = new Energizer(indX*i * x * (cons.SQUARE_SIDE / 2) + 2, indY*i * y * (cons.SQUARE_SIDE / 2) + 45, 20, 20);
+			energList.add(energizer);
+		}
 	}
 
 	public void newWalls() {
@@ -221,8 +232,9 @@ Toolkit.getDefaultToolkit().sync();
 				
 				if(energized == false){
 					life.lifes--;
-					newBall();
 					System.out.println("Has muerto");
+					newBall();
+
 				}
 				else{
 					score.points += ghostList.get(m).value;
@@ -241,6 +253,11 @@ Toolkit.getDefaultToolkit().sync();
 				score.points += dotList.get(l).value;
 				dotList.remove(l);
 			}
+			for(int i=0; i<4;i++) {
+				if (dotList.get(l).intersects(wallArr[i])) {
+					dotList.remove(l);
+				}
+			}
 
 		}
 
@@ -253,8 +270,12 @@ Toolkit.getDefaultToolkit().sync();
 				// MODO MIEO ACTIVADO
 				energize();
 				energList.remove(n);
+				energized = true;
+			}for(int i=0; i<4;i++) {
+				if (energList.get(n).intersects(wallArr[i])) {
+					energList.remove(n);
+				}
 			}
-
 		}
 	}
 
