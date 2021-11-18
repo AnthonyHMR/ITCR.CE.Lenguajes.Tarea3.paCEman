@@ -10,11 +10,21 @@ public class PacMan extends Rectangle{
 	int xVelocity;
 	int yVelocity;
 	int speed = 5;
+	private static PacMan instance;
 	
 	PacMan(int x, int y, int width, int height){
 
 		super(x,y,width,height);
 		
+	}
+
+	// Singleton
+	
+	public static PacMan getInstance(int x, int y, int width, int height){
+		if (instance == null) {
+            instance = new PacMan(x,y,width,height);
+        }
+        return instance;
 	}
 	
 	public void keyPressed(KeyEvent e) {
