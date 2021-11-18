@@ -245,7 +245,7 @@ public class GamePanel extends JPanel implements Runnable {
 					life.lifes--;
 					newBall();
 					System.out.println("Has muerto");
-					//game.sendMessage("muerte");
+					game.sendMessage("muerte");
 				} else {
 					score.points += ghostList.get(m).value;
 					ghostList.remove(m);
