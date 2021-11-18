@@ -10,12 +10,15 @@ public class Ghost extends Rectangle{
 	int xVelocity;
 	int yVelocity;
 	int speed = 3;
+	int value = 1000;
     Color _color;
+	Color _tcolor;
 	
 	Ghost(int x, int y, int width, int height, Color color){
 
 		super(x,y,width,height);
 		_color = color;
+		_tcolor = color;
 	}
 	
 	public void movement() {

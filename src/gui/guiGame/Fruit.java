@@ -4,11 +4,11 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 
-public class Dot extends Rectangle{
+public class Fruit extends Rectangle{
 
     int value = 500;
 	
-	Dot(int x, int y, int width, int height){
+	Fruit(int x, int y, int width, int height){
 
 		super(x,y,width,height);
 		
