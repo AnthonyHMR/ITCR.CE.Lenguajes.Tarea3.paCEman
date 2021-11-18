@@ -40,15 +40,16 @@ public class GamePanel extends JPanel implements Runnable{
 	//Ghost[] ghostArr = new Ghost[4];
 	LinkedList<Ghost> ghostList = new LinkedList<Ghost>();
 	LinkedList<Dot> dotList = new LinkedList<Dot>();
+	LinkedList<Fruit> fruitList = new LinkedList<Fruit>();
 	LinkedList<Energizer> energList = new LinkedList<Energizer>();
 
-	int lifes = 3;
+	//int lifes = 3;
 
 	GamePanel(){
 		newWalls();
 		newBall();
 		newGhosts();
-		newDot(1, 1);
+		newFruit(1, 1);
 		newEnergizer(2, 1);
 		score = new Score(GAME_WIDTH,GAME_HEIGHT);
 		message = new Message(GAME_WIDTH,GAME_HEIGHT);
@@ -87,6 +88,16 @@ public class GamePanel extends JPanel implements Runnable{
 				Dot dot = new Dot(i * x * (cons.SQUARE_SIDE / 2) + 7, j*y * (cons.SQUARE_SIDE / 2) + 50, 10, 10);
 				dotList.add(dot);
 			}
+		}
+	}
+
+	public void newFruit(int x, int y) {
+		Random random = new Random();
+		for(int i=0; i<5; i++) {
+			int indX = random.nextInt(6);
+			int indY = random.nextInt(6);
+			Fruit fruit = new Fruit(indX*i * x * (cons.SQUARE_SIDE / 2) + 2, indY*i * y * (cons.SQUARE_SIDE / 2) + 45, 15, 15);
+			fruitList.add(fruit);
 		}
 	}
 
@@ -232,7 +243,7 @@ Toolkit.getDefaultToolkit().sync();
 
 		// Collision pacman and ghosts
 
-		for(int m =0; m < ghostList.size(); m++){
+		for(int m = 0; m < ghostList.size(); m++){
 
 			if(ghostList.get(m).intersects(ball)) {
 				
@@ -241,7 +252,6 @@ Toolkit.getDefaultToolkit().sync();
 					System.out.println("Has muerto");
 					game.sendMessage("Muerte");
 					newBall();
-
 				}
 				else{
 					score.points += ghostList.get(m).value;
@@ -265,8 +275,26 @@ Toolkit.getDefaultToolkit().sync();
 					dotList.remove(l);
 				}
 			}
-
 		}
+
+		// Collision with fruit
+
+		for(int p = 0; p < fruitList.size(); p++){
+
+			if(fruitList.get(p).intersects(ball)) {
+				
+				//SUMAR PUNTOS
+				score.points += fruitList.get(p).value;
+				fruitList.remove(p);
+			}
+			for(int i=0; i<4;i++) {
+				if (fruitList.get(p).intersects(wallArr[i])) {
+					fruitList.remove(p);
+				}
+			}
+		}
+
+
 
 		// Collision with energizer
 
@@ -274,7 +302,6 @@ Toolkit.getDefaultToolkit().sync();
 
 			if(energList.get(n).intersects(ball)) {
 				
-				// MODO MIEO ACTIVADO
 				energize();
 				energList.remove(n);
 				energized = true;
@@ -327,6 +354,16 @@ Toolkit.getDefaultToolkit().sync();
 				move();
 				checkCollision();
 				repaint();
+				if (score.points >= 10000) {
+					System.out.println("10000 PUNTOS, más una vida");
+					life.lifes++;
+				}
+
+				if (life.lifes < 0){
+					ghostList.clear();
+					ball.setXDirection(0);
+					ball.setYDirection(0);
+				}
 				delta--;
 			}
 
