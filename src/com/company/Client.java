@@ -1,5 +1,4 @@
-package com.company;// A Java program for a Client
-//source: https://www.geeksforgeeks.org/socket-programming-in-java/
+package com.company;
 import java.net.*;
 import java.io.*;
 import java.util.Scanner;
@@ -42,11 +41,11 @@ public class Client
         System.out.println(message);
         if (message.equals(keyword)){
             System.out.println("Entiendo datos del server");
-            sendMessage("Puntaje");
+            sendMessage("Login");
         }
         else if(message.equals(keyword2)){
             System.out.println("Asignar puntaje");
-            sendMessage("Adios");
+            sendMessage("waiting...");
         }
         //else if (message.equals("Adios")){
         //    flag = false;
